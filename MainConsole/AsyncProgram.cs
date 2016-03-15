@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
@@ -12,15 +13,12 @@ namespace MainConsole
         private static void Main(string[] args)
         {
             Console.WriteLine("Start Async Code");
-            Console.WriteLine(Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("UI thread: {0}",Thread.CurrentThread.ManagedThreadId);
             var asyncSample = new AsyncSample();
-            Console.WriteLine(asyncSample.RunOrder);
             var tasks = asyncSample.StartWork();
-            Console.WriteLine(asyncSample.RunOrder);
-            Task.WhenAny(tasks);
-            Console.WriteLine(asyncSample.RunOrder);
-            Console.WriteLine("Waiting...");
-            tasks.ToList().ForEach(t => Console.WriteLine("{0} {1} {2}", t.Result.Name, t.Result.WorkTime.ToString("mm.fff"), t.Result.ThreadId));
+            //Task.WhenAny(tasks);
+            Console.WriteLine("Blocking...");
+            tasks.ToList().ForEach(t => Console.WriteLine("{0} {1} {2} {3}", t.Result.Name, t.Result.Start.ToString("ss.fff"), t.Result.Finish.ToString("ss.fff"), t.Result.ThreadId));
             Console.WriteLine(asyncSample.RunOrder);
             //Console.WriteLine("Press enter to exit");
             //Console.ReadLine();
@@ -46,10 +44,10 @@ namespace MainConsole
             {
                return _workList.Select(async t =>
                {
-                   using (var releaser = await m_lock.LockAsync())
-                   {
+                   //using (var releaser = await m_lock.LockAsync())
+                   //{
                        return await t();
-                   }
+                   //}
                });
             }
 
@@ -57,11 +55,12 @@ namespace MainConsole
             {
                 return await Task.Run(() =>
                 {
+                    var start = DateTime.Now;
                     for (int i = 0; i < 1000000000; i++)
                     {
                         
                     }
-                    return Done("DoWork");
+                    return Done("DoWork", start);
                 });
             }
 
@@ -69,29 +68,32 @@ namespace MainConsole
             {
                 return await Task.Run(() =>
                 {
-                    for (int i = 0; i < 1000000; i++)
+                    var start = DateTime.Now;
+                    for (int i = 0; i < 5000000; i++)
                     {
 
                     }
-                    return Done("DoWork1");
+                    return Done("DoWork1", start);
                 });
             }
             private async Task<DoneWork> DoWork2()
             {
-                return await Task.Run(() => Done("DoWork2"));
+                return await Task.Run(() => Done("DoWork2", DateTime.Now));
             }
 
-            private DoneWork Done(string name)
+            private DoneWork Done(string name, DateTime time)
             {
-                return new DoneWork { WorkTime = DateTime.Now, Name = name, ThreadId = Thread.CurrentThread.ManagedThreadId };
+                return new DoneWork { Finish = DateTime.Now, Name = name, ThreadId = Thread.CurrentThread.ManagedThreadId, Start = time};
             }
         }
 
         private class DoneWork
         {
             public string Name { get; set; }
-            public DateTime WorkTime { get; set; }
+            public DateTime Finish { get; set; }
             public int ThreadId { get; set; }
+
+            public DateTime Start { get; set; }
         }
     }
 
