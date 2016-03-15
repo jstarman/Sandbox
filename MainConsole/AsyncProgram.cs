@@ -14,12 +14,10 @@ namespace MainConsole
         {
             Console.WriteLine("Start Async Code");
             Console.WriteLine("UI thread: {0}",Thread.CurrentThread.ManagedThreadId);
-            var asyncSample = new AsyncSample();
-            var tasks = asyncSample.StartWork();
+            var tasks = new AsyncSample().StartWork();
             //Task.WhenAny(tasks);
             Console.WriteLine("Blocking...");
             tasks.ToList().ForEach(t => Console.WriteLine("{0} {1} {2} {3}", t.Result.Name, t.Result.Start.ToString("ss.fff"), t.Result.Finish.ToString("ss.fff"), t.Result.ThreadId));
-            Console.WriteLine(asyncSample.RunOrder);
             //Console.WriteLine("Press enter to exit");
             //Console.ReadLine();
         }
@@ -27,8 +25,7 @@ namespace MainConsole
         private class AsyncSample
         {
             private readonly List<Func<Task<DoneWork>>> _workList;
-            private readonly AsyncLock m_lock = new AsyncLock();
-            public string RunOrder { get; set; }
+            private readonly AsyncLocker m_lock = new AsyncLocker();
 
             public AsyncSample()
             {
@@ -44,10 +41,10 @@ namespace MainConsole
             {
                return _workList.Select(async t =>
                {
-                   //using (var releaser = await m_lock.LockAsync())
-                   //{
+                   using (var releaser = await m_lock.LockAsync())
+                   {
                        return await t();
-                   //}
+                   }
                });
             }
 
@@ -92,7 +89,6 @@ namespace MainConsole
             public string Name { get; set; }
             public DateTime Finish { get; set; }
             public int ThreadId { get; set; }
-
             public DateTime Start { get; set; }
         }
     }
@@ -173,6 +169,34 @@ namespace MainConsole
                 if (toRelease != null)
                     toRelease.SetResult(true);
             }
+        }
+    }
+
+    public sealed class AsyncLocker
+    {
+        private readonly SemaphoreSlim m_semaphore = new SemaphoreSlim(1, 1);
+        private readonly Task<IDisposable> m_releaser;
+
+        public AsyncLocker()
+        {
+            m_releaser = Task.FromResult((IDisposable)new Releaser(this));
+        }
+
+        public Task<IDisposable> LockAsync()
+        {
+            var wait = m_semaphore.WaitAsync();
+            return wait.IsCompleted ?
+                        m_releaser :
+                        wait.ContinueWith((_, state) => (IDisposable)state,
+                            m_releaser.Result, CancellationToken.None,
+            TaskContinuationOptions.ExecuteSynchronously, TaskScheduler.Default);
+        }
+
+        private sealed class Releaser : IDisposable
+        {
+            private readonly AsyncLocker m_toRelease;
+            internal Releaser(AsyncLocker toRelease) { m_toRelease = toRelease; }
+            public void Dispose() { m_toRelease.m_semaphore.Release(); }
         }
     }
 }
