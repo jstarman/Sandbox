@@ -33,7 +33,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <StartupObject>MainConsole.AsyncProgram</StartupObject>
+    <StartupObject>MainConsole.AsyncTPLProgram</StartupObject>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="CommandLine, Version=1.9.71.2, Culture=neutral, PublicKeyToken=de6f01bd326f8c32, processorArchitecture=MSIL">
@@ -74,7 +74,8 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="AsyncProgram.cs" />
+    <Compile Include="AsyncTPLProgram.cs" />
+    <Compile Include="AsyncSemaphoreProgram.cs" />
     <Compile Include="LoggingProgram.cs" />
     <Compile Include="FileWatcherProgram.cs" />
     <Compile Include="OwinProgram.cs" />

@@ -1,19 +1,17 @@
 ﻿using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
-using log4net.Core;
 
 namespace MainConsole
 {
-    public class AsyncProgram
+    public class AsyncSemaphoreProgram
     {
         private static void Main(string[] args)
         {
             Console.WriteLine("Start Async Code");
-            Console.WriteLine("UI thread: {0}",Thread.CurrentThread.ManagedThreadId);
+            Console.WriteLine("UI thread: {0}", Thread.CurrentThread.ManagedThreadId);
             var tasks = new AsyncSample().StartWork();
             //Task.WhenAny(tasks);
             Console.WriteLine("Blocking...");
@@ -39,13 +37,13 @@ namespace MainConsole
 
             public IEnumerable<Task<DoneWork>> StartWork()
             {
-               return _workList.Select(async t =>
-               {
-                   using (var releaser = await m_lock.LockAsync())
-                   {
-                       return await t();
-                   }
-               });
+                return _workList.Select(async t =>
+                {
+                    using (var releaser = await m_lock.LockAsync())
+                    {
+                        return await t();
+                    }
+                });
             }
 
             private async Task<DoneWork> DoWork()
@@ -55,7 +53,7 @@ namespace MainConsole
                     var start = DateTime.Now;
                     for (int i = 0; i < 1000000000; i++)
                     {
-                        
+
                     }
                     return Done("DoWork", start);
                 });
@@ -80,7 +78,7 @@ namespace MainConsole
 
             private DoneWork Done(string name, DateTime time)
             {
-                return new DoneWork { Finish = DateTime.Now, Name = name, ThreadId = Thread.CurrentThread.ManagedThreadId, Start = time};
+                return new DoneWork { Finish = DateTime.Now, Name = name, ThreadId = Thread.CurrentThread.ManagedThreadId, Start = time };
             }
         }
 

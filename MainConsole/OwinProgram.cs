@@ -9,17 +9,17 @@ namespace MainConsole
 {
     class OwinProgram
     {
-        private static void MainOther(string[] args)
-        {
-            var url = "http://+:8000";
+        //private static void MainOther(string[] args)
+        //{
+        //    var url = "http://+:8000";
 
-            using (WebApp.Start<Startup>(url))
-            {
-                Console.WriteLine("Running on {0}", url);
-                Console.WriteLine("Press enter to exit");
-                Console.ReadLine();
-            }
-        }
+        //    using (WebApp.Start<Startup>(url))
+        //    {
+        //        Console.WriteLine("Running on {0}", url);
+        //        Console.WriteLine("Press enter to exit");
+        //        Console.ReadLine();
+        //    }
+        //}
 
         private static void Main()
         {
