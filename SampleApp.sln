@@ -1,19 +1,13 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
-# Visual Studio 2013
-VisualStudioVersion = 12.0.40629.0
+# Visual Studio 14
+VisualStudioVersion = 14.0.24720.0
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PgpCrypto", "PgpCrypto\PgpCrypto.csproj", "{C5C2228B-67B0-455A-9867-D9A04D3B1A21}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MainConsole", "MainConsole\MainConsole.csproj", "{3451856C-70F2-4041-9B35-8CB2EE4033DF}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MsCrypto", "MsCrypto\MsCrypto.csproj", "{026E533F-2386-4C6B-81E4-3B001D4AE519}"
-EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SymmetricCrypto", "SymmetricCrypto\SymmetricCrypto.csproj", "{DE771242-72CF-47C5-B010-5E667A4C2C45}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "CryptoWeb", "CryptoWeb\CryptoWeb.csproj", "{1649C0D8-0D1F-4CF7-AD9E-44F67BA74AAA}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "OwinApp", "OwinApp\OwinApp.csproj", "{FFDD8A53-550D-491B-AB84-2DFD18989747}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WebApplication1", "WebApplication1\WebApplication1.csproj", "{033824FA-D459-4338-ABCA-3100E9D7AD40}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "ConsoleApplication1", "ConsoleApplication1\ConsoleApplication1.csproj", "{9034678E-FADC-4026-93FB-0815488F73B5}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -21,30 +15,18 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{C5C2228B-67B0-455A-9867-D9A04D3B1A21}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{C5C2228B-67B0-455A-9867-D9A04D3B1A21}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{C5C2228B-67B0-455A-9867-D9A04D3B1A21}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{C5C2228B-67B0-455A-9867-D9A04D3B1A21}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3451856C-70F2-4041-9B35-8CB2EE4033DF}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3451856C-70F2-4041-9B35-8CB2EE4033DF}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3451856C-70F2-4041-9B35-8CB2EE4033DF}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3451856C-70F2-4041-9B35-8CB2EE4033DF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{026E533F-2386-4C6B-81E4-3B001D4AE519}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{026E533F-2386-4C6B-81E4-3B001D4AE519}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{026E533F-2386-4C6B-81E4-3B001D4AE519}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{026E533F-2386-4C6B-81E4-3B001D4AE519}.Release|Any CPU.Build.0 = Release|Any CPU
-		{DE771242-72CF-47C5-B010-5E667A4C2C45}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{DE771242-72CF-47C5-B010-5E667A4C2C45}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{DE771242-72CF-47C5-B010-5E667A4C2C45}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{DE771242-72CF-47C5-B010-5E667A4C2C45}.Release|Any CPU.Build.0 = Release|Any CPU
 		{1649C0D8-0D1F-4CF7-AD9E-44F67BA74AAA}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{1649C0D8-0D1F-4CF7-AD9E-44F67BA74AAA}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{1649C0D8-0D1F-4CF7-AD9E-44F67BA74AAA}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{1649C0D8-0D1F-4CF7-AD9E-44F67BA74AAA}.Release|Any CPU.Build.0 = Release|Any CPU
-		{FFDD8A53-550D-491B-AB84-2DFD18989747}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{FFDD8A53-550D-491B-AB84-2DFD18989747}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{FFDD8A53-550D-491B-AB84-2DFD18989747}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{FFDD8A53-550D-491B-AB84-2DFD18989747}.Release|Any CPU.Build.0 = Release|Any CPU
+		{033824FA-D459-4338-ABCA-3100E9D7AD40}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{033824FA-D459-4338-ABCA-3100E9D7AD40}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{033824FA-D459-4338-ABCA-3100E9D7AD40}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{033824FA-D459-4338-ABCA-3100E9D7AD40}.Release|Any CPU.Build.0 = Release|Any CPU
+		{9034678E-FADC-4026-93FB-0815488F73B5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{9034678E-FADC-4026-93FB-0815488F73B5}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{9034678E-FADC-4026-93FB-0815488F73B5}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{9034678E-FADC-4026-93FB-0815488F73B5}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

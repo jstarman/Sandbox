@@ -100,10 +100,6 @@
       <Project>{c5c2228b-67b0-455a-9867-d9a04d3b1a21}</Project>
       <Name>PgpCrypto</Name>
     </ProjectReference>
-    <ProjectReference Include="..\SymmetricCrypto\SymmetricCrypto.csproj">
-      <Project>{de771242-72cf-47c5-b010-5e667a4c2c45}</Project>
-      <Name>SymmetricCrypto</Name>
-    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
