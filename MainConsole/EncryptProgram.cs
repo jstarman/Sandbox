@@ -5,7 +5,6 @@ using CommandLine;
 using CommandLine.Text;
 using PgpCrypto;
 using MsCrypto;
-using SymmetricCrypto;
 
 namespace MainConsole
 {
