@@ -34,6 +34,7 @@ namespace MainConsole
                 nameof(db.UserDefinedTableTypes), db.UserDefinedTableTypes, scripter);
             Script<UserDefinedType, UserDefinedTypeCollection>(directoryToSaveTo, schema, nameof(db.UserDefinedTypes),
                 db.UserDefinedTypes, scripter);
+            Script<Synonym, SynonymCollection>(directoryToSaveTo, schema, nameof(db.Synonyms), db.Synonyms, scripter);
         }
 
         private void Script<TObject, TCollection>(string directoryToSaveTo, string schema, string objectName, TCollection dbOjectCollection, Scripter scripter)
