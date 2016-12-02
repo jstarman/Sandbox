@@ -1,5 +1,8 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.IO;
+using System.Linq;
+using Microsoft.SqlServer.Management.Sdk.Sfc;
 using Microsoft.SqlServer.Management.Smo;
 
 namespace MainConsole
@@ -36,6 +39,49 @@ namespace MainConsole
                 db.UserDefinedTypes, scripter);
             Script<Synonym, SynonymCollection>(directoryToSaveTo, schema, nameof(db.Synonyms), db.Synonyms, scripter);
         }
+
+        public void ScriptTable(Server srv, string directoryToSaveTo, string schema, Database db)
+        {
+            var scripter = new Scripter(srv);
+            scripter.Options.ToFileOnly = true;
+            scripter.Options.ExtendedProperties = true;
+            //scripter.Options.DriAll = true; // All the constraints
+            //scripter.Options.Indexes = true;
+            //scripter.Options.Triggers = true;
+            scripter.Options.ScriptSchema = true;
+            scripter.Options.AnsiFile = true; //Save file as ANSI
+
+            DeconstructScripts(directoryToSaveTo, schema, db.Tables, scripter);
+        }
+
+        private void DeconstructScripts(string directoryToSaveTo, string schema, TableCollection tables, Scripter scripter)
+        {
+            if (tables.Count == 0) return;
+
+            var directory = Directory.CreateDirectory($@"{directoryToSaveTo}\Deconstruct");
+
+            foreach (Table t in tables)
+            {
+                if (t.Schema != schema) continue;
+
+                CreateScript(scripter, directory, $"Create_Table_{t.Name}", new [] { t.Urn});
+
+                var triggerUrn = t.Triggers.Cast<Trigger>().Select(tr => tr.Urn).ToArray();
+                if(triggerUrn.Any())
+                    CreateScript(scripter, directory, $"Create_Trigger_{t.Name}", triggerUrn);
+
+                var urnCollection = t.Indexes.Cast<Index>().Select(i => i.Urn).ToList(); //.SingleOrDefault(index => index.IndexKeyType == IndexKeyType.DriPrimaryKey);
+                CreateScript(scripter, directory, $"Create_Index_{t.Name}", urnCollection.ToArray());
+            }
+        }
+
+        private void CreateScript(Scripter scripter, DirectoryInfo directory, string fileName, Urn[] urnCollection)
+        {
+            scripter.Options.FileName = $@"{directory.FullName}\{fileName.Clean(_forbiddenFileChars, "-")}.sql";
+            Console.WriteLine($" {scripter.Options.FileName} ");
+            scripter.Script(urnCollection);
+        }
+
 
         private void Script<TObject, TCollection>(string directoryToSaveTo, string schema, string objectName, TCollection dbOjectCollection, Scripter scripter)
             where TObject : ScriptSchemaObjectBase

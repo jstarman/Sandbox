@@ -15,9 +15,10 @@ namespace MainConsole
 
             Server srv = new Server(serverName);
             Database db = srv.Databases[dbName];
-             
-            new DbObjects().Script(srv, directoryToSaveTo, schema, db);
-            new ReferenceData().Script(srv, directoryToSaveTo, referenceTableList, dbName, schema);
+
+            new DbObjects().ScriptTable(srv, directoryToSaveTo, schema, db);
+            //new DbObjects().Script(srv, directoryToSaveTo, schema, db);
+            //new ReferenceData().Script(srv, directoryToSaveTo, referenceTableList, dbName, schema);
         }
         
     }
